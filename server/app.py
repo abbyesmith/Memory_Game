@@ -29,6 +29,7 @@ class Signup(Resource):
         username = request_json.get('username')
         password = request_json.get('password')
         
+        
 
         player = Player(
             username=username,
@@ -127,6 +128,13 @@ class HighScore(Resource):
         db.session.commit()
         res = make_response(jsonify(one_player.to_dict()), 200)
         return res
+    
+    def delete(self, id):
+        one_player = Player.query.filter(Player.id == id).first()
+        db.session.delete(one_player)
+        db.session.commit()
+        return make_response(jsonify(one_player.to_dict()), 200)
+    
 api.add_resource(HighScore, '/highscore/<int:id>', endpoint='highscore/<int:id>')
 
 class AllPlayers(Resource):
@@ -139,6 +147,9 @@ class AllPlayers(Resource):
         return res
 
 api.add_resource(AllPlayers, '/players')
+
+
+        
 
         # print("restful")
         # all_cust = Customer.query.all()

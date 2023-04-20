@@ -49,15 +49,6 @@ export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
                     onChange = {(e)=>setPassword(e.target.value)}
                     style={{color: "black"}}  
                 />
-                <p style={{color: "black"}}>User Image</p>
-                <input 
-                    type="text" 
-                    value={userImage} 
-                    onChange = {(e)=>setUserImage(e.target.value)}
-                    style={{color: "black"}}  
-                />
-                <p></p>
-                <button style={{color: "black"}} type="submit">Register</button>
             </form>
         </div>
     )
