@@ -63,6 +63,7 @@ export default function game({currUser, userData}) {
     .then(r=>r.json())
     .catch((error)=>console.error(error))
 
+    alert('New Score successfully updated')
   }
 
   useEffect(() => {

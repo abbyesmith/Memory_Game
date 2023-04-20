@@ -119,12 +119,17 @@ export default function leader_board() {
       }
   };
 
+
   let sortedData = [...data];
-  if (sortBy === 'high_score') {
-    sortedData = data.sort((a, b) => b.high_score - a.high_score);
-  } else {
-    sortedData = data.sort((a, b) => a.username.localeCompare(b.username));
-  }
+
+        if (sortBy === 'high_score') {
+        sortedData = sortedData.filter(
+            item => item.high_score !== null).sort((a, b) => b.high_score - a.high_score);
+        } else {
+        sortedData = sortedData.filter(
+            item => item.high_score !== null).sort((a, b) => a.username.localeCompare(b.username));
+        }
+
 
   return (
     <div>
