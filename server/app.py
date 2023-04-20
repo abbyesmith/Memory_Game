@@ -13,7 +13,7 @@ from sqlalchemy.exc import IntegrityError
 
 
 from config import app, db, api
-from models import Cat, Player
+from models import Tile, Player, Game
 
 
 @app.route('/')
@@ -28,11 +28,11 @@ class Signup(Resource):
 
         username = request_json.get('username')
         password = request_json.get('password')
-        image_url = request_json.get('image_url')
+        
 
         player = Player(
             username=username,
-            image_url=image_url,
+            
         )
 
         # the setter will encrypt this:
@@ -116,7 +116,8 @@ class HighScore(Resource):
         one_player = Player.query.filter(Player.id == id).first()
         res = make_response(jsonify(one_player.to_dict()),200)
         return res
-
+# doesn't like to_dict
+    
     def patch(self, id):
         one_player = Player.query.filter(Player.id == id).first()
         data = request.get_json()
@@ -137,7 +138,7 @@ class AllPlayers(Resource):
         res = make_response(jsonify(all_players), 200)
         return res
 
-api.add_resource(AllPlayers, '/allplayers', endpoint = '/allplayers')
+api.add_resource(AllPlayers, '/players')
 
         # print("restful")
         # all_cust = Customer.query.all()
@@ -148,6 +149,74 @@ api.add_resource(AllPlayers, '/allplayers', endpoint = '/allplayers')
         # return res
 
 
+class All_Tiles(Resource):
+    def get(self):
+        all_tiles = Tile.query.all()
+        tile_list = []
+        
+        for tile in all_tiles:
+            new_tile = {
+                "image_url": tile.image_url
+            }
+            tile_list.append(new_tile)
+        return make_response(jsonify(tile_list), 200)
+    
+    def post(self):
+        data = request.get_json()
+        new_tile = Tile(
+            image_url = data['image_url']
+        )
+        db.session.add(new_tile)
+        db.session.commit()
+        return make_response(new_tile.to_dict(), 201)
+           
+       
+
+api.add_resource(All_Tiles, '/tiles')
+
+class Tiles_By_Id(Resource):
+    
+    def get(self, id):
+        tile = Tile.query.filter_by(id = id).first()
+        res = make_response(jsonify(tile.to_dict()), 200)
+        return res
+    
+    def delete(self, id):
+        tile = Tile.query.filter(Tile.id == id).first()
+        db.session.delete(tile)
+        db.session.commit()
+        return make_response(jsonify(tile.to_dict()), 200)
+        
+    
+api.add_resource(Tiles_By_Id, '/tiles/<int:id>')
+
+class All_Games(Resource):
+    def get(self):
+        all_games = Game.query.all()
+        all_games_list = []
+        for game in all_games:
+            all_games_list.append(game.to_dict())
+        res = make_response(jsonify(all_games_list), 200)
+        return res
+    
+    def post(self):
+        data = request.get_json()
+        new_game = Game(
+           player_id = data['player_id'],
+           tile_id = data['tile_id'] 
+        )
+        db.session.add(new_game)
+        db.session.commit()
+        return make_response(jsonify(new_game.to_dict()), 201)
+    
+    def delete(self):
+        all_games = Game.query.all()
+        for game in all_games:
+            db.session.delete(game)
+        db.session.commit()
+        return make_response(jsonify({}), 204)
+
+api.add_resource(All_Games, '/games')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
