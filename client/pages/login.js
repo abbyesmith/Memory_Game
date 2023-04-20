@@ -16,7 +16,7 @@ export default function login({currUser,loggedIn,setcurrUser,setloggedIn}) {
             "password": password
         }
 
-        fetch ("http://127.0.0.1:5000/login",{
+        fetch ("http://127.0.0.1:5555/login",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

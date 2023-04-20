@@ -24,7 +24,7 @@ export default function game({currUser}) {
 
   const fetchUserData = (userData) =>{
     // fetch ("http://127.0.0.1:5555//highscore/<userData.id>",{
-    fetch ("http://127.0.0.1:5555//highscore/1",{
+    fetch ("http://127.0.0.1:5555//highscore/${userData.id}",{
     // This is letting me work through... How to I make the route dynamic?
         method: "GET",
         headers: {
