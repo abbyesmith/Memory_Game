@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }) {
   useEffect(()=>{
     fetch('/logged_user')
     .then(r=>r.json())
-    .then(data=>setcurrUser(data))
+    .then(data=>setCurrUser(data))
   }, [])
 
 
