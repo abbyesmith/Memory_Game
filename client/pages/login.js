@@ -1,6 +1,8 @@
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 import {useEffect,useState} from 'react'
 import { Router, useRouter } from 'next/router'
+import './_app.js'
+
 
 export default function login({currUser,loggedIn,setcurrUser,setloggedIn}) {
     const [user, setUser] = useState(null);
@@ -14,7 +16,7 @@ export default function login({currUser,loggedIn,setcurrUser,setloggedIn}) {
             "password": password
         }
 
-        fetch ("http://127.0.0.1:5555/login",{
+        fetch ("http://127.0.0.1:5000/login",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -30,24 +32,25 @@ export default function login({currUser,loggedIn,setcurrUser,setloggedIn}) {
     }
 
     return(
-        <div>
+        <div className="login-box">
             <h1>Login</h1>
             <form onSubmit = {handleSubmit}>
-                <p>Username</p>
-                <p>keep typing in the input. the text is white</p>
+                <p style={{color: "black"}}>Username</p>
                 <input 
                     type="text" 
                     value={username} 
-                    onChange = {(e)=>setUsername(e.target.value)} 
+                    onChange = {(e)=>setUsername(e.target.value)}
+                    style={{color: "black"}} 
                 />
-                <p>Password</p>
+                <p style={{color: "black"}}>Password</p>
                 <input 
-                    type="text" 
+                    type="password" 
                     value={password} 
-                    onChange = {(e)=>setPassword(e.target.value)} 
+                    onChange = {(e)=>setPassword(e.target.value)}
+                    style={{color: "black"}} 
                 />
                 <p></p>
-                <button type="submit">Login</button>
+                <button style={{color: "black"}} type="submit">Login</button>
             </form>
         </div>
     )

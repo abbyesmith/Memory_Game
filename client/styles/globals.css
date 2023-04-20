@@ -25,3 +25,58 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* 3000/login page */ 
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: teal;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #0000;
+  padding: 20px;
+  border-radius: 5px;
+  color: #0000;
+}
+
+input[type="text"],
+input[type="password"] {
+border: 1px solid black;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+/* sign up page */
+
+.signup-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: teal;
+}
+
+/* home page */
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: black;
+}

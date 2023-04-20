@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react'
 import { Router, useRouter } from 'next/router'
+import './_app.js'
 
 export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
     const [user, setUser] = useState(null);
@@ -15,7 +16,7 @@ export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
             "image_url": userImage,
         }
 
-        fetch ("http://127.0.0.1:5555/signup",{
+        fetch ("http://127.0.0.1:5000/signup",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -31,29 +32,32 @@ export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
     }
 
     return(
-        <div>
+        <div className="signup-box">
             <h1>New User Sign Up</h1>
             <form onSubmit = {handleSubmit}>
-                <p>Username</p>
+                <p style={{color: "black"}}>Username</p>
                 <input 
                     type="text" 
                     value={username} 
-                    onChange = {(e)=>setUsername(e.target.value)} 
+                    onChange = {(e)=>setUsername(e.target.value)}
+                    style={{color: "black"}}  
                 />
-                <p>Password</p>
+                <p style={{color: "black"}}>Password</p>
                 <input 
-                    type="text" 
+                    type="password" 
                     value={password} 
-                    onChange = {(e)=>setPassword(e.target.value)} 
+                    onChange = {(e)=>setPassword(e.target.value)}
+                    style={{color: "black"}}  
                 />
-                <p>User Image</p>
+                <p style={{color: "black"}}>User Image</p>
                 <input 
                     type="text" 
                     value={userImage} 
-                    onChange = {(e)=>setUserImage(e.target.value)} 
+                    onChange = {(e)=>setUserImage(e.target.value)}
+                    style={{color: "black"}}  
                 />
                 <p></p>
-                <button type="submit">Register</button>
+                <button style={{color: "black"}} type="submit">Register</button>
             </form>
         </div>
     )
