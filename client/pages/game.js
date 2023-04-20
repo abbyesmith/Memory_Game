@@ -47,10 +47,10 @@ export default function game({currUser, userData}) {
     .catch((error) => console.error(error));
   };
 // This patch is not working :(
-  const handleSubmitHighScore = (e) => {
-    e.preventDefault();
+  const handleSubmitHighScore = () => {
+    // e.preventDefault();
     const data = {
-        "high_score": high_score
+        "high_score": moves
     }
 
     fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`, {
@@ -145,9 +145,11 @@ export default function game({currUser, userData}) {
       </div>
       <div className={styles.menu}>
         <p>{`GameOver - ${gameOver}`}</p>
-        <button onClick={() => handleSubmitHighScore()}>
-            Submit New Best Score!
-        </button>
+          {gameOver  ? 
+            <button onClick={() => handleSubmitHighScore()}>
+                Submit New Best Score!
+            </button>
+            : <p></p>}
         <button onClick={() => initialize()} className={styles.reset_btn}>
           Reset
         </button>

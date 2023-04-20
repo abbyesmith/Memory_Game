@@ -110,15 +110,20 @@ export default function leader_board() {
     if (sortBy === 'score') {
       setSortBy('username');
     } else {
-      setSortBy('username');
+      setSortBy('high_score');
     }
+    if (sortBy === 'username') {
+        setSortBy('high_score');
+      } else {
+        setSortBy('username');
+      }
   };
 
   let sortedData = [...data];
-  if (sortBy === 'score') {
+  if (sortBy === 'high_score') {
     sortedData = data.sort((a, b) => b.high_score - a.high_score);
   } else {
-    sortedData = data.sort((a, b) => a.username - b.username);
+    sortedData = data.sort((a, b) => a.username.localeCompare(b.username));
   }
 
   return (
@@ -131,8 +136,7 @@ export default function leader_board() {
           <tr>
             <th></th>
             <th>Player</th>
-            <th>Games Won</th>
-            <th>Success Rate</th>
+            <th>Best Score</th>
           </tr>
         </thead>
         <tbody>
@@ -140,8 +144,7 @@ export default function leader_board() {
             <tr key={item.id}>
               <td>{item.image}</td>
               <td>{item.username}</td>
-              <td>{item.total_wins} wins</td>
-              <td>{((item.total_wins / item.total_games) * 100).toFixed(2)}%</td>
+              <td>{item.high_score}</td>
             </tr>
           ))}
         </tbody>
