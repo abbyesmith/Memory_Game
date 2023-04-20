@@ -5,6 +5,7 @@
 # flask db upgrade 
 #  
 
+
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 
@@ -13,26 +14,24 @@ from config import db, bcrypt
 
 
 
-class Cat(db.Model):
-    __tablename__ = 'cats'
+class Tile(db.Model, SerializerMixin):
+    __tablename__ = 'tiles'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    breed = db.Column(db.String)
-    age = db.Column(db.Integer)
-
-    def __repr__(self):
-        return f'<{self.name}: {self.breed} cat, {self.age} years old>'
+    serialize_rules = ('-games.tiles', '-games.player')
     
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String)
+    
+
+   
 class Player(db.Model, SerializerMixin):
     __tablename__ = 'players'
 
-    serialize_rules = ()
+    serialize_rules = ('-games.tiles', '-games.player')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique = True, nullable=False)
     _password_hash = db.Column(db.String)
-    image_url = db.Column(db.String)
     high_score = db.Column(db.Integer)
 
     @hybrid_property
@@ -53,3 +52,16 @@ class Player(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Player {self.username}>'
+    
+    
+class Game(db.Model, SerializerMixin):
+    __tablename__ = 'games'
+    
+    serialize_rules = ('-tiles.games', '-player.games')
+    
+    id = db.Column(db.Integer, primary_key=True)
+    player_id = db.Column(db.Integer, db.ForeignKey('players.id'))
+    tile_id = db.Column(db.Integer, db.ForeignKey('tiles.id'))
+    
+    player = db.relationship('Player', backref='games')
+    tiles = db.relationship('Tile', backref='games')
