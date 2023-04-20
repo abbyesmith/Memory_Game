@@ -4,28 +4,33 @@ import Link from 'next/link'
 
 
 const board = ["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"];
-export default function game({currUser}) {
+export default function game({currUser, userData}) {
   const [boardData, setBoardData] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
   const [moves, setMoves] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   //   Abby (and GPT) came up with the get function
-  const [userData, setUserData] = useState({
-    username: "",
-    high_score: "",
-    id: "",
-  });
+//   const [userData, setUserData] = useState({
+//     username: "",
+//     high_score: "",
+//     id: "",
+//   });
+  if(!currUser){
+    return <div>Loading</div>
+  }
 
   useEffect(() => {
     initialize();
-    fetchUserData();
+    fetchUserData(currUser);
   }, []);
 
-  const fetchUserData = (userData) =>{
-    // fetch ("http://127.0.0.1:5555//highscore/<userData.id>",{
-    fetch ("http://127.0.0.1:5555//highscore/${userData.id}",{
-    // This is letting me work through... How to I make the route dynamic?
+  console.log(currUser)
+
+
+  const fetchUserData = (currUser) =>{
+    fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`,{
+
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -42,13 +47,13 @@ export default function game({currUser}) {
     .catch((error) => console.error(error));
   };
 // This patch is not working :(
-  const handleSubmitHighScore = (e) => {
-    e.preventDefault();
+  const handleSubmitHighScore = () => {
+    // e.preventDefault();
     const data = {
-        "high_score": high_score
+        "high_score": moves
     }
 
-    fetch ("http://127.0.0.1:5555//highscore/1", {
+    fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -58,6 +63,7 @@ export default function game({currUser}) {
     .then(r=>r.json())
     .catch((error)=>console.error(error))
 
+    alert('New Score successfully updated')
   }
 
   useEffect(() => {
@@ -106,11 +112,11 @@ export default function game({currUser}) {
   return (
     <div className={styles.container}>
         <div >
-            {userData.high_score ? (
-                <p>{`Welcome ${userData.username}! Your current high score is ${userData.high_score}`}</p>
+            {currUser.high_score ? (
+                <p>{`Welcome ${currUser.username}! Your current high score is ${currUser.high_score}`}</p>
             ) : (
                 <p>
-                {`Welcome ${userData.username}! To play the game, click two cards to reveal the image. If the two cards match, then they will stay face up. If they do not match, they will flip back over. Continue until all of the cards are face up.`}
+                {`Welcome ${currUser.username}! To play the game, click two cards to reveal the image. If the two cards match, then they will stay face up. If they do not match, they will flip back over. Continue until all of the cards are face up.`}
                 </p>
             )}
         <br/>
@@ -140,9 +146,11 @@ export default function game({currUser}) {
       </div>
       <div className={styles.menu}>
         <p>{`GameOver - ${gameOver}`}</p>
-        <button onClick={() => handleSubmitHighScore()}>
-            Submit New Best Score!
-        </button>
+          {gameOver  ? 
+            <button onClick={() => handleSubmitHighScore()}>
+                Submit New Best Score!
+            </button>
+            : <p></p>}
         <button onClick={() => initialize()} className={styles.reset_btn}>
           Reset
         </button>
