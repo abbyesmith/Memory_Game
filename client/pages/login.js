@@ -36,7 +36,7 @@ export default function login({onLogin, setCurrUser}) {
               r.json().then((user) => {
                 setCurrUser(user);
                 console.log(user);
-                router.push('/game');
+                router.push('/tiles');
               });
             } else {
                 r.json().then((err) => setErrors(err.errors));

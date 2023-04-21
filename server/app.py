@@ -155,10 +155,10 @@ class All_Tiles(Resource):
         tile_list = []
         
         for tile in all_tiles:
-            new_tile = {
-                "image_url": tile.image_url
-            }
-            tile_list.append(new_tile)
+            # new_tile = {
+            #     "image_url": tile.image_url
+            # }
+            tile_list.append(tile.to_dict())
         return make_response(jsonify(tile_list), 200)
     
     def post(self):
@@ -201,6 +201,7 @@ class All_Games(Resource):
     
     def post(self):
         data = request.get_json()
+        print(data)
         new_game = Game(
            player_id = data['player_id'],
            tile_id = data['tile_id'] 
