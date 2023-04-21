@@ -33,7 +33,7 @@ export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
 
     return(
         <div className="signup-box">
-            <h1>New User Sign Up</h1>
+            <h1 style={{ color: "black"}}>New User Sign Up</h1>
             <form onSubmit = {handleSubmit}>
                 <p style={{color: "black"}}>Username</p>
                 <input 
@@ -49,15 +49,8 @@ export default function signup({currUser,loggedIn,setcurrUser,setloggedIn}) {
                     onChange = {(e)=>setPassword(e.target.value)}
                     style={{color: "black"}}  
                 />
-                <p style={{color: "black"}}>User Image</p>
-                <input 
-                    type="text" 
-                    value={userImage} 
-                    onChange = {(e)=>setUserImage(e.target.value)}
-                    style={{color: "black"}}  
-                />
                 <p></p>
-                <button style={{color: "black"}} type="submit">Register</button>
+                <button style={{color: "black"}} type="submit">Sign Up</button>
             </form>
         </div>
     )

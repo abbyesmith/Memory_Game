@@ -2,6 +2,7 @@
 import {useEffect,useState} from 'react'
 import { Router, useRouter } from 'next/router'
 import './_app.js'
+import Link from 'next/link'
 
 
 export default function login({onLogin, setCurrUser}) {
