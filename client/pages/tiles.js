@@ -9,6 +9,15 @@ export default function Tiles({ router,currUser }) {
     
     console.log(currUser)
     
+    useEffect(() => {
+        fetch("http://127.0.0.1:5555/games", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+ 
+        })
+    })
 
     useEffect(() => {
         // fetch the data from the tiles table (image and id)
