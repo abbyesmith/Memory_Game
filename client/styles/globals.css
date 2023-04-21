@@ -18,13 +18,68 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-image: url("https://images5.alphacoders.com/478/478768.jpg");
 }
+
+.nav-links {
+
+  background-image: url("https://images5.alphacoders.com/478/478768.jpg");
+  color: black
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  padding: 10px;
+}
+
+.nav-links a:hover {
+  color: white;
+  background-color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+} 
+
+/* home page */
+
+.middle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px);
+}
+
+.box {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.box h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.box p {
+  font-size: 1.2em;
+}
+
 
 /* 3000/login page */ 
 
@@ -34,7 +89,10 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: teal;
+  /* background-image: url('https://www.austinchronicle.com/binary/720b/caged.jpg'); */
+  background-image: url("https://images5.alphacoders.com/478/478768.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 form {
@@ -66,7 +124,9 @@ h1 {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: teal;
+  background-image: url("https://images5.alphacoders.com/478/478768.jpg");
+  background-color: black;
+
 }
 
 /* home page */
@@ -78,4 +138,51 @@ h1 {
   justify-content: center;
   height: 100vh;
   background-color: black;
+}
+
+/* tiles */
+
+.tile-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+  border: 1px solid black;
+  opacity: 0.5;
+}
+
+.tile-image.selected {
+  opacity: 1;
+  border: 2px solid blue;
+}
+
+.tile-page input[type="checkbox"] {
+  display: none;
+}
+
+.tile-page label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.tile-page label img {
+  opacity: 0.5;
+}
+
+.tile-page input[type="checkbox"]:checked + img {
+  opacity: 1;
+  border: 2px solid blue;
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  background-color: black;
+  color: white;
 }
