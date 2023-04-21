@@ -138,6 +138,7 @@ h1 {
   justify-content: center;
   height: 100vh;
   background-color: black;
+<<<<<<< HEAD
 }
 
 /* tiles */
@@ -185,4 +186,7 @@ h1 {
   height: 100px;
   background-color: black;
   color: white;
+=======
+  color: white
+>>>>>>> 3d3e2ee1095ed9d33edb1f3f04f546c53c76637d
 }
