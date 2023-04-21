@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import styles from '../styles/game.module.css'
+// import styles from '../styles/game.module.css'
 import Link from 'next/link'
+import './_app.js'
+
 
 
 
@@ -23,7 +25,7 @@ export default function game({currUser, userData}) {
     if(!currUser){
       return <div>Loading</div>
     }
-    const board = ["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"];
+    const board = ["->🤖", "->👽", "->👻", "->🤡", "->🐧", "->🦚", "->😄", "->🚀"];
 
     
     useEffect(() => {
@@ -127,22 +129,21 @@ export default function game({currUser, userData}) {
   };
 
 
-
   return (
-    <div className={styles.container}>
+    <div className="container">
         <div >
             {currUser.high_score ? (
-                <p>{`Welcome ${currUser.username}! Your current high score is ${currUser.high_score}`}</p>
+                <p className="game-text">{`Welcome ${currUser.username}! Your current high score is ${currUser.high_score}`}</p>
             ) : (
-                <p>
+                <p className="game-text">
                 {`Welcome ${currUser.username}! To play the game, click two cards to reveal the image. If the two cards match, then they will stay face up. If they do not match, they will flip back over. Continue until all of the cards are face up.`}
                 </p>
             )}
         <br/>
-        <p>{`Moves - ${moves}`}</p>
+        <p className="game-text">{`Moves - ${moves}`}</p>
       </div>
 
-      <div className={styles.board}>
+      <div className="board">
         {boardData.map((data, i) => {
           const flipped = flippedCards.includes(i) ? true : false;
           const matched = matchedCards.includes(i) ? true : false;
@@ -152,33 +153,35 @@ export default function game({currUser, userData}) {
                 updateActiveCards(i);
               }}
               key={i}
-            //   className={`card ${flipped || matched ? "active" : ""} ${
-            //     matched ? "matched" : ""
-            //   } ${gameOver ? "gameover" : ""}`}
+              className={`card ${flipped || matched ? "active" : ""} ${
+                matched ? "matched" : ""
+              } ${gameOver ? "gameover" : ""}`}
             //   I don't know how to do the classname here
             >
-              <div className={styles.card_front}>{data}</div>
-              <div className={styles.card_back}></div>
+              <div className="card_front">{data}</div>
+              <div className="card_back"></div>
             </div>
           );
         })}
       </div>
-      <div className={styles.menu}>
+      <div className="menu">
         <p>{`GameOver - ${gameOver}`}</p>
           {gameOver  ? 
             <button onClick={() => handleSubmitHighScore()}>
                 Submit New Best Score!
             </button>
             : <p></p>}
-        <button onClick={() => initialize()} className={styles.reset_btn}>
+        <button onClick={() => initialize()} className="reset_btn">
           Reset
-        </button>
-        <Link href = "/leader_board">Go To Leader Board</Link>
+        </button >
+        <div className="game-text">
+        < Link href = "/leader_board">Go To Leader Board</Link>
+        </div>
       </div>
       <img src = "https://pbs.twimg.com/media/EfkuwuFWAAI4Ih_.jpg"/>
     </div>
   );
-}
+          }
 // export default function game() {
 
 //     return(
