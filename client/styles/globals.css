@@ -140,3 +140,39 @@ h1 {
   background-color: black;
   color: white
 }
+
+/* tiles */
+
+.tile-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+  border: 1px solid black;
+  opacity: 0;
+}
+
+.tile-image.selected {
+  opacity: 0;
+  border: 2px solid blue;
+}
+
+.tile-page input[type="checkbox"] {
+  display: none;
+}
+
+.tile-page label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.tile-page label img {
+  opacity: .75;
+  
+}
+
+.tile-page input[type="checkbox"]:checked + img {
+  opacity: 1;
+  border: 2px solid blue;
+}

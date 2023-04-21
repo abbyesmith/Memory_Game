@@ -67,23 +67,42 @@ export default function Tiles({ router,currUser }) {
 
   };
 
-  return (
-    <div>
-        <h1>Tile page</h1>
-        <h2>Select 8 images of Nicolas Cage</h2>
-      {data.map((item, index) => (
-        <div key={index}>
-          <img src={item.image_url} alt="" />
-          <input
-            type="checkbox"
-            checked={checkedState.includes(item.id)}
-            onChange={() => handleOnChange(item.id)}
-          />
-        </div>
-      ))}
+//   return (
+//     <div>
+//         <h1>Tile page</h1>
+//         <h2>Select 8 images of Nicolas Cage</h2>
+//       {data.map((item, index) => (
+//         <div key={index}>
+//           <img src={item.image_url} alt="" />
+//           <input
+//             type="checkbox"
+//             checked={checkedState.includes(item.id)}
+//             onChange={() => handleOnChange(item.id)}
+//           />
+//         </div>
+//       ))}
       
-      <button onClick={handleSaveCheckedItems}>Save Checked Items</button>
+//       <button onClick={handleSaveCheckedItems}>Save Checked Items</button>
+//     </div>
+//   );
+
+return (
+    <div className="tile-page">
+      <h1 style={{color: "black"}}>Look at all these tiles!</h1>
+      <h2 style={{color: "black"}}> Select 8 images of Nicolas Cage</h2>
+      {data.map((image) => (
+        <label key={image.id} htmlFor={image.id}>
+          <  input type="checkbox" id={image.id} name="images" value={image.image_url} 
+          onChange={() => handleOnChange(image.id)}/>
+          checked={checkedState.includes(image.id)}
+          <img src={image.image_url} className="tile-image" />
+        </label>
+      ))}
+       <button onClick={handleSaveCheckedItems}>Save Checked Items</button>
     </div>
+  
   );
-}
+  
+  }
+
 

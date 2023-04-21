@@ -52,7 +52,7 @@ export default function leader_board() {
         <tbody>
           {sortedData.map((item) => (
             <tr key={item.id}>
-              <td>{item.image}</td>
+              {/* <td>{item.image}</td> */}
               <td>{item.username}</td>
               <td>{item.high_score}</td>
             </tr>

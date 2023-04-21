@@ -3,7 +3,11 @@ import styles from '../styles/game.module.css'
 import Link from 'next/link'
 
 
-const board = ["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"];
+
+// const [boardData, setBoardData] = useState([])
+
+
+
 export default function game({currUser, userData}) {
   const [boardData, setBoardData] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
@@ -11,68 +15,83 @@ export default function game({currUser, userData}) {
   const [moves, setMoves] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   //   Abby (and GPT) came up with the get function
-//   const [userData, setUserData] = useState({
-//     username: "",
-//     high_score: "",
-//     id: "",
-//   });
-  if(!currUser){
-    return <div>Loading</div>
+  //   const [userData, setUserData] = useState({
+    //     username: "",
+    //     high_score: "",
+    //     id: "",
+    //   });
+    if(!currUser){
+      return <div>Loading</div>
+    }
+    const board = ["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"];
+
+    
+    useEffect(() => {
+      initialize();
+      fetchUserData(currUser);
+    }, []);
+    
+    console.log(currUser)
+    
+    const fetchImages = () => {
+      fetch (`http://127.0.0.1:5555//highscore/games`, {
+        method: "GET",
+        headers: {"Content-Type": "application/json",
+      },
+    })
+    .then(response => response.json())
+    .then ((boardData) => {
+      setBoardData({
+        image: boardData.image_url,
+      });
+    })
   }
-
-  useEffect(() => {
-    initialize();
-    fetchUserData(currUser);
-  }, []);
-
-  console.log(currUser)
-
-
+  const newBoard = []
   const fetchUserData = (currUser) =>{
     fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`,{
-
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
+      
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
     .then(r => r.json())
     .then((data) => {
-        setUserData({
-            username: data.username,
-            high_score: data.high_score,
-            id: data.id
-        });
+      setUserData({
+        username: data.username,
+        high_score: data.high_score,
+        id: data.id
+      });
     })
     .catch((error) => console.error(error));
   };
-// This patch is not working :(
-  const handleSubmitHighScore = () => {
-    // e.preventDefault();
-    const data = {
+  // This patch is not working :(
+    const handleSubmitHighScore = () => {
+      // e.preventDefault();
+      const data = {
         "high_score": moves
-    }
-
-    fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`, {
+      }
+      
+      fetch (`http://127.0.0.1:5555//highscore/${currUser.id}`, {
         method: "PATCH",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
-    })
-    .then(r=>r.json())
-    .catch((error)=>console.error(error))
-
-    alert('New Score successfully updated')
-  }
-
-  useEffect(() => {
-    if (matchedCards.length == 16) {
-      setGameOver(true);
+      })
+      .then(r=>r.json())
+      .catch((error)=>console.error(error))
+      
+      alert('New Score successfully updated')
     }
-  }, [moves]);
-
-  const initialize = () => {
+    
+    useEffect(() => {
+      if (matchedCards.length == 16) {
+        setGameOver(true);
+      }
+    }, [moves]);
+    
+    const initialize = () => {
     shuffle();
     setGameOver(false);
     setFlippedCards([]);
