@@ -1,38 +1,41 @@
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
+import {useRouter} from 'next/navigation'
 import { useState, useEffect } from "react";
 import './_app.js'
 
-export default function Tiles({ currUser }) {
-  const [data, setData] = useState([]);
-  const [checkedState, setCheckedState] = useState([]);
+export default function Tiles({ router,currUser }) {
+    const [data, setData] = useState([]);
+    const [checkedState, setCheckedState] = useState([]);
+    
+    console.log(currUser)
+    
 
-  console.log(currUser)
-
-  useEffect(() => {
-    // fetch the data from the tiles table (image and id)
-    fetch("http://localhost:5555/tiles")
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-  const handleOnChange = (id) => {
-    // Changes if the button is clicked or not
-    if (checkedState.includes(id)) {
-      setCheckedState(checkedState.filter((item) => item !== id));
-    } else {
-      setCheckedState([...checkedState, id]);
-    }
-  };
-
-  console.log(checkedState)
-
-  const handleSaveCheckedItems = () => {
+    useEffect(() => {
+        // fetch the data from the tiles table (image and id)
+        fetch("http://localhost:5555/tiles")
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .catch((error) => console.error(error));
+    }, []);
+    
+    const handleOnChange = (id) => {
+        // Changes if the button is clicked or not
+        if (checkedState.includes(id)) {
+            setCheckedState(checkedState.filter((item) => item !== id));
+        } else {
+            setCheckedState([...checkedState, id]);
+        }
+    };
+    
+    console.log(checkedState)
+    
+    const handleSaveCheckedItems = () => {
+        // const router = useRouter();
     // Add the data to the Games table
     // Here for loop / map, console log each state ID, take this and put it in theh loop
     // Console logging
 
-    let image_id = checkedState.map((id) => {
+    checkedState.map((id) => {
         console.log(id)
         fetch("http://localhost:5555/games", {
           method: "POST",
@@ -50,15 +53,15 @@ export default function Tiles({ currUser }) {
           .then((data) => console.log(data))
           .catch((error) => console.error(error));
     
-    });
-
-    console.log(image_id)
+        })
+        router.push('/game')
 
   };
 
   return (
     <div>
         <h1>Tile page</h1>
+        <h2>Select 8 images of Nicolas Cage</h2>
       {data.map((item, index) => (
         <div key={index}>
           <img src={item.image_url} alt="" />
@@ -69,6 +72,7 @@ export default function Tiles({ currUser }) {
           />
         </div>
       ))}
+      
       <button onClick={handleSaveCheckedItems}>Save Checked Items</button>
     </div>
   );
